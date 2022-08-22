@@ -1,0 +1,17 @@
+ from utils import format_convert
+ from utils import format_convert
+path = os.path.join(settings.BASE_DIR , 'images/')
+ import os
+>>> path = os.path.join(settings.BASE_DIR , 'images/')
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'settings' is not defined
+>>> from django.conf import settings
+>>> path = os.path.join(settings.BASE_DIR , 'images/')
+>>> filename = '2743382997156288450086115630723756161_COPERNICUS_S2_20210102T072311_20210102T072312_T39SWV'
+>>> format = 'jpg'
+>>> a = format_convert(path,filename,format)
+>>> print(a)
+/api_django/images/2743382997156288450086115630723756161_COPERNICUS_S2_20210102T072311_20210102T072312_T39SWV.zip
+>>>
+
