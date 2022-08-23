@@ -71,7 +71,8 @@ services:
       - DB_SCHEMA=public
       - ALLOW_ORIGIN=http://localhost:3000
     volumes:
-      - /home/sedreh-dinvarzade/Desktop/sedreh_web_application/api_django:/api_django
+#      - /home/sedreh-dinvarzade/Desktop/sedreh_web_application/api_django:/api_django
+      - /home/ubuntu/sedreh_web_application/api_django:/api_django
 
   celery_worker:
     build:
