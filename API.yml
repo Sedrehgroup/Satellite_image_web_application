@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: sedreh download image
+  description: this is the API documentation of Sedreh Download Images website
+servers:
+  - url : http://37.32.31.171/api
+paths:
+  /get-image-collection:
+   post:
+    summary: image collection
+    description: return dates and names of images existing specific period of time and polygon
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              start:
+                type: string
+                example: '2020-01'
+              end:
+                type: string
+                example: '2020-02'
+              geom:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  features:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                        properties:
+                          type: string
+                        geometry:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                            coordinates:
+                              type: array
+                              items:
+                                type: array
+                                items:
+                                  type: array
+                                  items:
+                                    type: number
+                                    format: double
+
+    responses:
+      '200':
+        description: successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_of_image:
+                  type: string
+                  example: COPERNICUS/S2_SR/20200103T072309_20200103T072519_T39SWV
+      '400':
+        description: dates not correct! || Incorrect date format! must be YYYY-mm-dd! || Incorrect polygon format!
+
+  /get-image:
+    post:
+      summary: image
+      description: download image and add layer in geoserver and return layer name
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                'image_name' :
+                  type: string
+                  example: "COPERNICUS/S2_SR/20200128T072141_20200128T072141_T39SWV"
+                geom:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    features:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                          properties:
+                            type: string
+                          geometry:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                              coordinates:
+                                type: array
+                                items:
+                                  type: array
+                                  items:
+                                    type: array
+                                    items:
+                                      type: number
+                                      format: double
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "sedreh:165451071675120765854400906703539045414_COPERNICUS_S2_SR_20200128T072141_20200128T072141_T39SWV"
+        '400':
+          description: Incorrect polygon format!
+
+  /download-image/{data}:
+    get:
+      description: download image
+      parameters:
+        - in: path
+          name: data
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: file name not correct!
+        '404':
+          description: file not found!
+    
