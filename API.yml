@@ -133,4 +133,3 @@ paths:
           description: file name not correct!
         '404':
           description: file not found!
-    
