@@ -4,7 +4,7 @@ info:
   title: sedreh download image
   description: this is the API documentation of Sedreh Download Images website
 servers:
-  - url : http://37.32.31.171/api
+  - url : http://138.201.167.227/api
 paths:
   /get-image-collection:
    post:
