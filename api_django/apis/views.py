@@ -40,9 +40,13 @@ class GetImageCollectionAPI(APIView):
         image_class = GetImageCollection(start=start_date, end=end_date, polygon=geom)
         image_names, image_dates = image_class.get_dates()
 
-        data = {}
-        for name, date in zip(image_names,image_dates):
-            data[date] = name
+        # data = {}
+        # for name, date in zip(image_names,image_dates):
+        #     data[date] = name
+
+        data = []
+        for name, date in zip(image_names, image_dates):
+            data.append({"name": name, "date": date})
 
         return Response(status=status.HTTP_200_OK , data=data)
 
