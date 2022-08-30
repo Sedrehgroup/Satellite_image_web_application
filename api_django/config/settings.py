@@ -148,4 +148,4 @@ GEOSERVER = {
     'PORT': os.environ.get('GEOSERVER_PORT')
 }
 
-
+CORS_ORIGIN_ALLOW_ALL = True

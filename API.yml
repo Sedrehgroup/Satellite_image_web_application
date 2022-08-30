@@ -6,7 +6,7 @@ info:
 servers:
   - url : http://138.201.167.227/api
 paths:
-  /get-image-collection:
+  /get-image-collection/:
    post:
     summary: image collection
     description: return dates and names of images existing specific period of time and polygon
@@ -57,11 +57,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                date_of_image:
-                  type: string
-                  example: COPERNICUS/S2_SR/20200103T072309_20200103T072519_T39SWV
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                  name:
+                    type: string
       '400':
         description: dates not correct! || Incorrect date format! must be YYYY-mm-dd! || Incorrect polygon format!
 
