@@ -18,10 +18,10 @@ paths:
             properties:
               start:
                 type: string
-                example: '2020-01'
+                example: '2020-01-01'
               end:
                 type: string
-                example: '2020-02'
+                example: '2020-02-01'
               geom:
                 type: object
                 properties:

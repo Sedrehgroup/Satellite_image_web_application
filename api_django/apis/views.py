@@ -2,39 +2,39 @@ import os.path
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from utils import GetImageCollection , LayerAdd , GetImageClass , format_convert
+from utils import GetImageCollection, LayerAdd, GetImageClass, format_convert
 from uuid import uuid4
 from django.contrib.gis.geos import GEOSGeometry
 import datetime
 from django.views.static import serve
-from django.views.generic.detail import View
 from os.path import exists
 from django.conf import settings
 
 # Create your views here.
 file_name = "2743382997156288450086115630723756161_COPERNICUS_S2_20210102T072311_20210102T072312_T39SWV"
 
+
 class GetImageCollectionAPI(APIView):
-    def post(self , request):
+    def post(self, request):
 
         start_date = request.data.get('start')
         end_date = request.data.get('end')
         geom = request.data.get('geom')
 
         # check dates
-        if not isinstance(start_date , str) or not isinstance(end_date , str):
-            return Response(status=status.HTTP_400_BAD_REQUEST , data={"fail" : "dates not correct!"})
+        if not isinstance(start_date, str) or not isinstance(end_date, str):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"fail": "dates not correct!"})
         try:
-             datetime.datetime.strptime(start_date, '%Y-%m')
-             datetime.datetime.strptime(end_date, '%Y-%m')
+            datetime.datetime.strptime(start_date, '%Y-%m-%d')
+            datetime.datetime.strptime(end_date, '%Y-%m-%d')
         except:
-            return Response(status=status.HTTP_400_BAD_REQUEST , data={"fail" : "Incorrect date format! must be YYYY-mm-dd"})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"fail": "Incorrect date format! must be YYYY-mm-dd"})
 
         # check geom
         try:
             polygon_type = GEOSGeometry(str(geom['features'][0]['geometry']))
         except:
-            return Response(status=status.HTTP_400_BAD_REQUEST , data={"fail" : "Incorrect polygon format!"})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"fail": "Incorrect polygon format!"})
 
         # get image names and dates
         image_class = GetImageCollection(start=start_date, end=end_date, polygon=geom)
@@ -52,7 +52,7 @@ class GetImageCollectionAPI(APIView):
 
 
 class GetImage(APIView):
-    def post(self ,request):
+    def post(self, request):
         # render random order id
         order_id = uuid4().int
 
@@ -64,14 +64,14 @@ class GetImage(APIView):
         try:
             polygon_type = GEOSGeometry(str(geom['features'][0]['geometry']))
         except:
-            return Response(status=status.HTTP_400_BAD_REQUEST , data={"fail" : "Incorrect polygon format!"})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"fail": "Incorrect polygon format!"})
 
         # get image
         image_class = GetImageClass(geom)
         image = image_class.get_image(image_name)
 
         # prepare for download and geoserver
-        image_name = image_name.replace('/' , '_')
+        image_name = image_name.replace('/', '_')
         order_name_replaced = str(order_id) + '_' + image_name
 
         # download image
