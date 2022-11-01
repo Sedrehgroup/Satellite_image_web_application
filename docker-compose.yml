@@ -20,6 +20,8 @@ services:
       - GEOSERVER_ADMIN_USER=sedreh
       - GEOSERVER_ADMIN_PASSWORD=ABcd1234!@
     volumes:
+#      - /home/ubuntu/sedreh_web_appilcation/geoserver_delete.sh:/geoserver_delete.sh
+      - /geoserver_delete.sh:/geoserver_delete.sh
       - geoserver_sedreh:/opt/geoserver/data_dir
       - geoserver_footprints_sedreh:/opt/footprints_dir
       - geoserver_gwc_sedreh:/opt/geoserver/data_dir/gwc
@@ -70,8 +72,9 @@ services:
       - DB_PORT=5432
       - DB_SCHEMA=public
       - ALLOW_ORIGIN=http://localhost:3000
-#    volumes:
-#      - /home/sedreh-dinvarzade/Desktop/sedreh_web_application/api_django:/api_django
+    volumes:
+#      - /home/sedreh-dinvarzade/Desktop/sedreh_web_application/api_django/images:/api_django/images
+      - /home/ubuntu/sedreh_web_appilcation/api_django/images:/api_django/images
 
   celery_worker:
     build:

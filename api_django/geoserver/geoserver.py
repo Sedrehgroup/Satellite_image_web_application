@@ -129,7 +129,7 @@ def delete_workspace(name):
     workspace = cat.get_workspace(name)
     
     if workspace is not None:
-        cat.delete(workspace)
+        cat.delete(workspace,recurse=True)
 
 
 def exist_store(name, workspace=None, type=None):
